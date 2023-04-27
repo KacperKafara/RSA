@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="pl.grupa3.rsa.HelloController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
-
-    <Label fx:id="welcomeText"/>
-    <Button text="Hello!" onAction="#onHelloButtonClick"/>
-</VBox>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="500" minWidth="500" prefHeight="530.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.grupa3.rsa.HelloController">
+   <children>
+      <TextArea fx:id="nField" layoutX="48.0" layoutY="26.0" maxHeight="38.0" minHeight="38.0" prefHeight="38.0" prefWidth="420.0" />
+      <TextArea fx:id="eField" layoutX="48.0" layoutY="74.0" maxHeight="38.0" minHeight="38.0" prefHeight="38.0" prefWidth="420.0" />
+      <TextArea fx:id="dField" layoutX="48.0" layoutY="124.0" maxHeight="38.0" minHeight="38.0" prefHeight="38.0" prefWidth="420.0" />
+      <Label layoutX="22.0" layoutY="37.0" text="n:" />
+      <Label layoutX="22.0" layoutY="85.0" text="e:" />
+      <Label layoutX="22.0" layoutY="135.0" text="d:" />
+      <Button fx:id="generateKeyButton" layoutX="48.0" layoutY="180.0" mnemonicParsing="false" onAction="#generateKey" text="Generuj klucze" />
+      <Button layoutX="211.0" layoutY="180.0" mnemonicParsing="false" text="Wczytaj klucze" />
+      <Button layoutX="382.0" layoutY="180.0" mnemonicParsing="false" text="Zapisz klucze" />
+      <TextArea layoutX="26.0" layoutY="275.0" prefHeight="200.0" prefWidth="200.0" />
+      <TextArea layoutX="282.0" layoutY="275.0" prefHeight="200.0" prefWidth="200.0" />
+      <Button layoutX="86.0" layoutY="232.0" mnemonicParsing="false" text="Wczytaj plik" />
+      <Button layoutX="342.0" layoutY="232.0" mnemonicParsing="false" text="Wczytaj plik" />
+      <Button layoutX="226.0" layoutY="232.0" mnemonicParsing="false" text="Zaszyfruj" />
+      <Button layoutX="90.0" layoutY="488.0" mnemonicParsing="false" text="Zapisz plik" />
+      <Button layoutX="346.0" layoutY="488.0" mnemonicParsing="false" text="Zapisz plik" />
+   </children>
+</Pane>

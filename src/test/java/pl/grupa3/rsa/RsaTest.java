@@ -1,9 +1,7 @@
 package pl.grupa3.rsa;
 
 import org.junit.jupiter.api.Test;
-
 import java.math.BigInteger;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class RsaTest {

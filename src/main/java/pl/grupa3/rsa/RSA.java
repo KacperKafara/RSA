@@ -6,12 +6,10 @@ import java.util.Random;
 public class RSA {
     private BigInteger p;
     private BigInteger q;
-
     private BigInteger n;
-
     private BigInteger euler;
-
     private BigInteger e;
+    private BigInteger d;
 
     private BigInteger generateRandomPrimeNumber(int bitNumbers) {
         BigInteger number;
@@ -29,24 +27,41 @@ public class RSA {
         return result;
     }
 
-    public BigInteger getE() {
-        return e;
-    }
-
     public BigInteger getEuler() {
         return euler;
     }
 
     RSA() {
         do {
-            p = generateRandomPrimeNumber(500);
-            q = generateRandomPrimeNumber(510);
+            p = generateRandomPrimeNumber(256);
+            q = generateRandomPrimeNumber(256);
         } while (p.compareTo(q) == 0);
-        n = p.multiply(q);
         euler = p.subtract(new BigInteger("1")).multiply(q.subtract(new BigInteger("1")));
+    }
+
+    private void generatePublicKey() {
+        n = p.multiply(q);
         e = generateRandomRelativelyPrimeNumber(euler);
-//        System.out.println(n);
-//        System.out.println(euler);
-//        System.out.println(e);
+    }
+
+    private void generatePrivateKey() {
+        d = e.modInverse(euler);
+    }
+
+    public void generateKey() {
+        generatePublicKey();
+        generatePrivateKey();
+    }
+
+    public BigInteger getN() {
+        return n;
+    }
+
+    public BigInteger getD() {
+        return d;
+    }
+
+    public BigInteger getE() {
+        return e;
     }
 }

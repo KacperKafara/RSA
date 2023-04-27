@@ -2,13 +2,23 @@ package pl.grupa3.rsa;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 
 public class HelloController {
-    @FXML
-    private Label welcomeText;
+    RSA rsa = new RSA();
 
     @FXML
-    protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
+    TextArea nField;
+    @FXML
+    TextArea eField;
+    @FXML
+    TextArea dField;
+
+    @FXML
+    public void generateKey() {
+        rsa.generateKey();
+        nField.setText(rsa.getN().toString());
+        eField.setText(rsa.getE().toString());
+        dField.setText(rsa.getD().toString());
     }
 }
