@@ -14,12 +14,13 @@
       <Button fx:id="generateKeyButton" layoutX="48.0" layoutY="180.0" mnemonicParsing="false" onAction="#generateKey" text="Generuj klucze" />
       <Button layoutX="211.0" layoutY="180.0" mnemonicParsing="false" text="Wczytaj klucze" />
       <Button layoutX="382.0" layoutY="180.0" mnemonicParsing="false" text="Zapisz klucze" />
-      <TextArea layoutX="26.0" layoutY="275.0" prefHeight="200.0" prefWidth="200.0" />
-      <TextArea layoutX="282.0" layoutY="275.0" prefHeight="200.0" prefWidth="200.0" />
-      <Button layoutX="86.0" layoutY="232.0" mnemonicParsing="false" text="Wczytaj plik" />
-      <Button layoutX="342.0" layoutY="232.0" mnemonicParsing="false" text="Wczytaj plik" />
-      <Button layoutX="226.0" layoutY="232.0" mnemonicParsing="false" text="Zaszyfruj" />
-      <Button layoutX="90.0" layoutY="488.0" mnemonicParsing="false" text="Zapisz plik" />
-      <Button layoutX="346.0" layoutY="488.0" mnemonicParsing="false" text="Zapisz plik" />
+      <TextArea fx:id="decryptedMsgField" layoutX="26.0" layoutY="275.0" prefHeight="200.0" prefWidth="200.0" />
+      <TextArea fx:id="encryptedMsgField" layoutX="282.0" layoutY="275.0" prefHeight="200.0" prefWidth="200.0" />
+      <Button layoutX="86.0" layoutY="232.0" mnemonicParsing="false" onAction="#loadDecryptedFile" text="Wczytaj plik" />
+      <Button layoutX="342.0" layoutY="232.0" mnemonicParsing="false" onAction="#loadEncryptedFile" text="Wczytaj plik" />
+      <Button layoutX="217.0" layoutY="232.0" mnemonicParsing="false" onAction="#encrypt" prefHeight="25.0" prefWidth="63.0" text="Zaszyfruj" />
+      <Button layoutX="90.0" layoutY="488.0" mnemonicParsing="false" onAction="#saveDecryptedFile" text="Zapisz plik" />
+      <Button layoutX="346.0" layoutY="488.0" mnemonicParsing="false" onAction="#saveEncryptedFile" text="Zapisz plik" />
+      <Button layoutX="221.0" layoutY="488.0" mnemonicParsing="false" onAction="#decrypt" prefHeight="25.0" prefWidth="63.0" text="Odszyfruj" />
    </children>
 </Pane>
