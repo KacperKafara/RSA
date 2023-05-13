@@ -12,8 +12,8 @@
       <Label layoutX="22.0" layoutY="85.0" text="e:" />
       <Label layoutX="22.0" layoutY="135.0" text="d:" />
       <Button fx:id="generateKeyButton" layoutX="48.0" layoutY="180.0" mnemonicParsing="false" onAction="#generateKey" text="Generuj klucze" />
-      <Button layoutX="211.0" layoutY="180.0" mnemonicParsing="false" text="Wczytaj klucze" />
-      <Button layoutX="382.0" layoutY="180.0" mnemonicParsing="false" text="Zapisz klucze" />
+      <Button layoutX="211.0" layoutY="180.0" mnemonicParsing="false" onAction="#loadKey" text="Wczytaj klucze" />
+      <Button layoutX="382.0" layoutY="180.0" mnemonicParsing="false" onAction="#saveKey" text="Zapisz klucze" />
       <TextArea fx:id="decryptedMsgField" layoutX="26.0" layoutY="275.0" prefHeight="200.0" prefWidth="200.0" />
       <TextArea fx:id="encryptedMsgField" layoutX="282.0" layoutY="275.0" prefHeight="200.0" prefWidth="200.0" />
       <Button layoutX="86.0" layoutY="232.0" mnemonicParsing="false" onAction="#loadDecryptedFile" text="Wczytaj plik" />

@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -32,7 +33,7 @@ public class RsaTest {
     void encryptionAndDecryptionTest() {
         RSA rsa = new RSA();
         rsa.generateKey();
-        byte[] file = "wiadomosc".getBytes();
+        byte[] file = {119, 105, 97, 100, 111, 109, 111, 115, 99, -15, -14, -18, 5, -8, -12, -43};
         List<Byte> fileList = new ArrayList<>();
         for (byte b : file) {
             fileList.add(b);

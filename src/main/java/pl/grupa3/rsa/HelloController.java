@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
 
 public class HelloController implements Initializable {
     RSA rsa = new RSA();
-
+    private final byte[] delimiter = "¡¿., abdsfjkgfsdfdasgdagsdbfdhgndfjkgbaruhsdt¡¿".getBytes();
     @FXML
     TextArea nField;
     @FXML
@@ -46,6 +46,22 @@ public class HelloController implements Initializable {
                         outputStream.write(decryptedMsgTab);
                     } else if (type == 1) {
                         outputStream.write(encryptedMsgTab);
+                    } else if (type == 2) {
+                        List<Byte> publicKey = new ArrayList<>();
+                        byte[] n = rsa.getN().toByteArray();
+                        byte[] e = rsa.getE().toByteArray();
+                        for (byte b : n) {
+                            publicKey.add(b);
+                        }
+                        for (byte b : delimiter) {
+                            publicKey.add(b);
+                        }
+                        for (byte b : e) {
+                            publicKey.add(b);
+                        }
+                        outputStream.write(listToArray(publicKey));
+                    } else if (type == 3) {
+                        outputStream.write(rsa.getD().toByteArray());
                     }
                 } catch (NullPointerException e) {
                     System.out.println(e.getMessage());
@@ -71,21 +87,26 @@ public class HelloController implements Initializable {
             String fileName = f.getAbsolutePath();
             try (InputStream inputStream = new FileInputStream(fileName)) {
                 byte[] file = inputStream.readAllBytes();
-                if (type == 1) {
+                if (type == 0) {
                     msgTab = file;
                     for (byte b : msgTab) {
                         msg.add(b);
                     }
                     fileField.setText(new String(file));
-                }
-                if (type == 2) {
+                } else if (type == 1) {
                     encryptedMsgTab = file;
                     for (byte b : encryptedMsgTab) {
                         encryptedMsg.add(b);
                     }
                     fileField.setText(new String(file));
+                } else if (type == 2) {
+                    rsa.loadKey(0, file);
+                    nField.setText(rsa.getN().toString());
+                    eField.setText(rsa.getE().toString());
+                } else if (type == 3) {
+                    rsa.loadKey(1, file);
+                    dField.setText(rsa.getD().toString());
                 }
-
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
@@ -120,19 +141,29 @@ public class HelloController implements Initializable {
     }
     @FXML
     public void loadDecryptedFile() {
-        loadFile(1, decryptedMsgField);
+        loadFile(0, decryptedMsgField);
     }
     @FXML
     public void loadEncryptedFile() {
-        loadFile(2, encryptedMsgField);
+        loadFile(1, encryptedMsgField);
     }
     @FXML
-    public void saveDecryptedFile(ActionEvent event) {
+    public void saveDecryptedFile() {
         saveFile(0);
     }
     @FXML
-    public void saveEncryptedFile(ActionEvent event) {
+    public void saveEncryptedFile() {
         saveFile(1);
+    }
+    @FXML
+    public void saveKey() {
+        saveFile(2);
+        saveFile(3);
+    }
+    @FXML
+    public void loadKey() {
+        loadFile(2, nField);
+        loadFile(3, dField);
     }
 
     @Override

@@ -13,40 +13,60 @@ public class RSA {
     private BigInteger euler;
     private BigInteger e;
     private BigInteger d;
-
     private final int size = 30;
-    private final byte[] delimiter = "¡¿., asdt¡¿".getBytes();
-
-    private byte[][] splitBytes(byte[] bytesToSplit, byte[] delimiters) {
-        List<byte[]> byteList = new ArrayList<>();
-        int startIndex = 0;
-        int delimiterIndex = -1;
-        while ((delimiterIndex = indexOfDelimiter(bytesToSplit, delimiters, startIndex)) != -1) {
-            int length = delimiterIndex - startIndex;
-            byte[] subArray = Arrays.copyOfRange(bytesToSplit, startIndex, startIndex + length);
-            byteList.add(subArray);
-            startIndex = delimiterIndex + delimiters.length;
+    private final byte[] delimiter = "¡¿., abdsfjkgfsdfdasgdagsdbfdhgndfjkgbaruhsdt¡¿".getBytes();
+    public byte[][] devideIntoBlocks(List<Byte> inputList) {
+        List<Byte> currentBlock = new ArrayList<>();
+        List<List<Byte>> outputList = new ArrayList<>();
+        for (int i = 0; i < inputList.size(); i++) {
+            currentBlock.add(inputList.get(i));
+            if (i == inputList.size() - 1) {
+                outputList.add(currentBlock);
+                break;
+            }
+            if (currentBlock.size() >= size && inputList.get(i + 1) <= 0) {
+                currentBlock.add(inputList.get(i + 1));
+                i++;
+            } else if (currentBlock.size() >= size && inputList.get(i + 1) > 0) {
+                outputList.add(currentBlock);
+                currentBlock = new ArrayList<>();
+            }
         }
-        byte[] lastSubArray = Arrays.copyOfRange(bytesToSplit, startIndex, bytesToSplit.length);
-        if (lastSubArray.length > 0) {
-            byteList.add(lastSubArray);
+        byte[][] res = new byte[outputList.size()][];
+        for (int i = 0; i < outputList.size(); i++) {
+            res[i] = listToArray(outputList.get(i));
         }
-        return byteList.toArray(new byte[0][0]);
+        return res;
     }
-    private int indexOfDelimiter(byte[] bytes, byte[] delimiters, int startIndex) {
-        for (int i = startIndex; i <= bytes.length - delimiters.length; i++) {
-            boolean found = true;
-            for (int j = 0; j < delimiters.length; j++) {
-                if (bytes[i + j] != delimiters[j]) {
-                    found = false;
-                    break;
+    private byte[][] splitBytes(byte[] input, byte[] delimiter) {
+        List<byte[]> result = new ArrayList<>();
+        int start = 0;
+        for (int i = 0; i < input.length; i++) {
+            if (input[i] == delimiter[0] && i + delimiter.length <= input.length) {
+                boolean found = true;
+                for (int j = 1; j < delimiter.length; j++) {
+                    if (input[i+j] != delimiter[j]) {
+                        found = false;
+                        break;
+                    }
+                }
+                if (found) {
+                    byte[] subarray = Arrays.copyOfRange(input, start, i);
+                    result.add(subarray);
+                    start = i + delimiter.length;
+                    i += delimiter.length - 1;
                 }
             }
-            if (found) {
-                return i;
-            }
         }
-        return -1;
+        byte[] finalSubarray = Arrays.copyOfRange(input, start, input.length);
+        if (finalSubarray.length > 0) {
+            result.add(finalSubarray);
+        }
+        byte[][] resultArray = new byte[result.size()][];
+        for (int i = 0; i < result.size(); i++) {
+            resultArray[i] = result.get(i);
+        }
+        return resultArray;
     }
     private byte[] listToArray(List<Byte> list) {
         byte[] arr = new byte[list.size()];
@@ -62,22 +82,18 @@ public class RSA {
         } while (!number.isProbablePrime(100));
         return number;
     }
-
     private BigInteger generateRandomRelativelyPrimeNumber(BigInteger limit) {
         BigInteger result;
         do {
-            result = new BigInteger(limit.bitLength(), new Random());
+            result = new BigInteger(limit.bitLength() - 10, new Random());
         } while (result.gcd(limit).compareTo(BigInteger.ONE) != 0 || result.compareTo(limit) > 0);
         return result;
     }
-
     public BigInteger getEuler() {
         return euler;
     }
-
     private void generatePublicKey() {
         n = p.multiply(q);
-//        e = new BigInteger("1699145693137051146996061");
         e = generateRandomRelativelyPrimeNumber(euler);
     }
 
@@ -87,10 +103,8 @@ public class RSA {
 
     public void generateKey() {
         do {
-//            p = new BigInteger("1313131345364123");
-//            q = new BigInteger("4294967291");
-            p = generateRandomPrimeNumber(256);
-            q = generateRandomPrimeNumber(256);
+            p = generateRandomPrimeNumber(512);
+            q = generateRandomPrimeNumber(512);
         } while (p.compareTo(q) == 0);
         euler = p.subtract(new BigInteger("1")).multiply(q.subtract(new BigInteger("1")));
         generatePublicKey();
@@ -99,30 +113,18 @@ public class RSA {
 
     public List<Byte> encrypt(List<Byte> msg) {
         List<Byte> encryptedMsg = new ArrayList<>();
-        byte[] arr = new byte[size];
-        while (msg.size() % size != 0) {
-            msg.add((byte) 0);
-        }
-        int added = 0;
-        for (Byte aByte : msg) {
-            if (added < size) {
-                arr[added] = aByte;
-                added++;
+        byte[][] arr = devideIntoBlocks(msg);
+        for (byte[] a : arr) {
+            BigInteger b = new BigInteger(a);
+            if (b.compareTo(n) > 0) {
+                return null;
             }
-            if (added == size) {
-                BigInteger msgBlock = new BigInteger(arr);
-                if (msgBlock.compareTo(n) > 0) {
-                    System.out.println("aaaaaaaaaaaa");
-                    return null;
-                }
-                byte[] enc = msgBlock.modPow(e, n).toByteArray();
-                for (byte b : enc) {
-                    encryptedMsg.add(b);
-                }
-                for (byte b : delimiter) {
-                    encryptedMsg.add(b);
-                }
-                added = 0;
+            byte[] enc = b.modPow(e, n).toByteArray();
+            for (byte c : enc) {
+                encryptedMsg.add(c);
+            }
+            for (byte c : delimiter) {
+                encryptedMsg.add(c);
             }
         }
         return encryptedMsg;
@@ -139,23 +141,27 @@ public class RSA {
                 decryptedMsg.add(c);
             }
         }
-        for (int i = decryptedMsg.size() - 1; i >= 0; i--) {
-            if (decryptedMsg.get(i) == (byte)0) {
-                decryptedMsg.remove(i);
-            }
-        }
         return decryptedMsg;
     }
 
     public BigInteger getN() {
         return n;
     }
-
     public BigInteger getD() {
         return d;
     }
-
     public BigInteger getE() {
         return e;
     }
+
+    public void loadKey(int type, byte[] key) {
+        if (type == 0) {
+            byte[][] publicKey = splitBytes(key, delimiter);
+            n = new BigInteger(publicKey[0]);
+            e = new BigInteger(publicKey[1]);
+        } else {
+            d = new BigInteger(key);
+        }
+    }
+
 }
