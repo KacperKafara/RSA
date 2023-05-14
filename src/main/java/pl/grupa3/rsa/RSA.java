@@ -15,7 +15,7 @@ public class RSA {
     private BigInteger d;
     private final int size = 30;
     private final byte[] delimiter = "¡¿., abdsfjkgfsdfdasgdagsdbfdhgndfjkgbaruhsdt¡¿".getBytes();
-    public byte[][] devideIntoBlocks(List<Byte> inputList) {
+    public byte[][] divideIntoBlocks(List<Byte> inputList) {
         List<Byte> currentBlock = new ArrayList<>();
         List<List<Byte>> outputList = new ArrayList<>();
         for (int i = 0; i < inputList.size(); i++) {
@@ -113,7 +113,7 @@ public class RSA {
 
     public List<Byte> encrypt(List<Byte> msg) {
         List<Byte> encryptedMsg = new ArrayList<>();
-        byte[][] arr = devideIntoBlocks(msg);
+        byte[][] arr = divideIntoBlocks(msg);
         for (byte[] a : arr) {
             BigInteger b = new BigInteger(a);
             if (b.compareTo(n) > 0) {

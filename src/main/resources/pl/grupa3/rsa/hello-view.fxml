@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="500" minWidth="500" prefHeight="530.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.grupa3.rsa.HelloController">
+<Pane fx:id="keyBoardInput" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="500" minWidth="500" prefHeight="530.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.grupa3.rsa.HelloController">
    <children>
       <TextArea fx:id="nField" layoutX="48.0" layoutY="26.0" maxHeight="38.0" minHeight="38.0" prefHeight="38.0" prefWidth="420.0" />
       <TextArea fx:id="eField" layoutX="48.0" layoutY="74.0" maxHeight="38.0" minHeight="38.0" prefHeight="38.0" prefWidth="420.0" />
@@ -11,9 +14,9 @@
       <Label layoutX="22.0" layoutY="37.0" text="n:" />
       <Label layoutX="22.0" layoutY="85.0" text="e:" />
       <Label layoutX="22.0" layoutY="135.0" text="d:" />
-      <Button fx:id="generateKeyButton" layoutX="48.0" layoutY="180.0" mnemonicParsing="false" onAction="#generateKey" text="Generuj klucze" />
-      <Button layoutX="211.0" layoutY="180.0" mnemonicParsing="false" onAction="#loadKey" text="Wczytaj klucze" />
-      <Button layoutX="382.0" layoutY="180.0" mnemonicParsing="false" onAction="#saveKey" text="Zapisz klucze" />
+      <Button fx:id="generateKeyButton" layoutX="48.0" layoutY="168.0" mnemonicParsing="false" onAction="#generateKey" text="Generuj klucze" />
+      <Button layoutX="211.0" layoutY="168.0" mnemonicParsing="false" onAction="#loadKey" text="Wczytaj klucze" />
+      <Button layoutX="378.0" layoutY="168.0" mnemonicParsing="false" onAction="#saveKey" text="Zapisz klucze" />
       <TextArea fx:id="decryptedMsgField" layoutX="26.0" layoutY="275.0" prefHeight="200.0" prefWidth="200.0" />
       <TextArea fx:id="encryptedMsgField" layoutX="282.0" layoutY="275.0" prefHeight="200.0" prefWidth="200.0" />
       <Button layoutX="86.0" layoutY="232.0" mnemonicParsing="false" onAction="#loadDecryptedFile" text="Wczytaj plik" />
@@ -22,5 +25,6 @@
       <Button layoutX="90.0" layoutY="488.0" mnemonicParsing="false" onAction="#saveDecryptedFile" text="Zapisz plik" />
       <Button layoutX="346.0" layoutY="488.0" mnemonicParsing="false" onAction="#saveEncryptedFile" text="Zapisz plik" />
       <Button layoutX="221.0" layoutY="488.0" mnemonicParsing="false" onAction="#decrypt" prefHeight="25.0" prefWidth="63.0" text="Odszyfruj" />
+      <CheckBox fx:id="userInput" layoutX="196.0" layoutY="205.0" mnemonicParsing="false" text="Odczyt z klawiatury" />
    </children>
 </Pane>

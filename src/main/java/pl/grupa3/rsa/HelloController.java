@@ -1,8 +1,8 @@
 package pl.grupa3.rsa;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -10,7 +10,6 @@ import javafx.stage.Stage;
 import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -27,6 +26,8 @@ public class HelloController implements Initializable {
     TextArea encryptedMsgField;
     @FXML
     TextArea decryptedMsgField;
+    @FXML
+    CheckBox userInput;
 
     byte[] msgTab;
     byte[] encryptedMsgTab;
@@ -122,6 +123,13 @@ public class HelloController implements Initializable {
     @FXML
     public void encrypt() {
         try {
+            if (userInput.isSelected()) {
+                byte[] tmp = decryptedMsgField.getText().getBytes();
+                msg = new ArrayList<>();
+                for (byte b : tmp) {
+                    msg.add(b);
+                }
+            }
             encryptedMsg = rsa.encrypt(msg);
             encryptedMsgTab = listToArray(encryptedMsg);
             encryptedMsgField.setText(new String(encryptedMsgTab));
